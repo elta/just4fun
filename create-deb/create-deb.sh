@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Check debhelper exist
+
+# Check dh-make exist
+
 # create a tmp dir, do all thins in it.
 mkdir -pv tmp
 cd tmp
@@ -15,8 +19,11 @@ all:
 install:
 	mkdir -pv \$(DESTDIR)/usr/bin
 	cp a.sh \$(DESTDIR)/usr/bin/a.sh
+	mkdir -pv \$(DESTDIR)/bin
+	cp a.sh \$(DESTDIR)/bin/a.sh
 
 clean:
+
 destclean:
 	rm \$(DESTDIR)/usr/bin/a.sh
 
