@@ -6,12 +6,24 @@
 
 import urllib.request,io,os,sys
 
-if len(sys.argv) != 3:
-    print("Usage: cmd website output-file")
+if len(sys.argv) < 3:
+    print("Usage: cmd website output-file [,startchap [,endchap]]")
     exit(-1)
 
 site = sys.argv[1]
 ofile = sys.argv[2]
+
+startchap = 0
+endchap = 100000
+
+if len(sys.argv) >= 4:
+    startchap = int(sys.argv[3]) - 1
+if len(sys.argv) >= 5:
+    endchap = int(sys.argv[4])
+
+if startchap >= endchap:
+    print("Start chap should less than endchap")
+    exit(-1)
 
 req=urllib.request.Request(site)
 site = site[:site.rfind("/")]
@@ -40,7 +52,14 @@ lists = sorted(lists)
 mdir=sys.path[0]+'/'
 file=open(mdir+ofile,'a',1,'gbk')
 
-for i in range(0, len(lists), 1):
+if endchap > len(lists):
+    endchap = len(lists)
+
+if startchap >= endchap:
+    print("Start chap should less than endchap")
+    exit(-1)
+
+for i in range(startchap, endchap, 1):
     print("Loading 第" + str(lists[i][0]) + "章 : " + site + "/" + lists[i][1])
     req=urllib.request.Request(site + "/" + lists[i][1])
     f=urllib.request.urlopen(req)
