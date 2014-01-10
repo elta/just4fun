@@ -1,0 +1,4 @@
+
+# Minix
+minix/*.o
+minix/*.tst
