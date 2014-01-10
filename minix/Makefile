@@ -2,7 +2,7 @@
 CROSS_COMPILE	?= mips64el-unknown-linux-gnu-
 
 SIM = qemu-system-mips64el
-SIMFLAGS = -nographic -cpu mips64dspr2 -kernel
+SIMFLAGS = -nographic -M malta -kernel
 
 AS      = $(CROSS_COMPILE)as
 LD      = $(CROSS_COMPILE)ld
