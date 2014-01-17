@@ -1,9 +1,8 @@
 # Makefile
 
 CC     := gcc
-CFLAGS := -lpthread
-FILES  := head.o \
-          body/body.o
+CFLAGS := -lpthread -I./include
+FILES  := head.o body/body.o
 
 all: human
 
@@ -11,10 +10,10 @@ all: human
 	$(CC) $(CFLAGS) -c $< -o $@
 
 human: $(FILES)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(FILES) -o $@
 
-clean: $(FILES)
-	rm -rf $<
+clean:
+	rm -rf $(FILES)
 
 distclean: clean
 	rm -rf human

@@ -1,31 +1,33 @@
-/* example.c*/
 #include <stdio.h>
 #include <pthread.h>
 
-void thread(void)
+#include <body/body.h>
+
+/* This is the brain, the main control of human. */
+void start_brain(void)
 {
     int i;
 
-    for(i=0;i<3;i++)
-        printf("This is a pthread.\n");
+    for (i = 0; i < 100; i++) {
+        printf("This is brain.\n");
+        sleep(1);
+    }
 }
 
 int main(void)
 {
-    pthread_t id;
+    pthread_t trd_body;
     int i,ret;
 
-    ret=pthread_create(&id,NULL,(void *) thread,NULL);
-    if(ret != 0) {
-        printf ("Create pthread error!\n");
+    ret = body_init(&trd_body);
+    if(ret) {
+        printf ("Create body failed!\n");
         return 1;
     }
 
-    for(i=0;i<3;i++)
-        printf("This is the main process.\n");
+    start_brain();
 
-    pthread_join(id,NULL);
-    printf("End\n");
+    pthread_join(trd_body,NULL);
 
-    return (0);
+    return 0;
 }
