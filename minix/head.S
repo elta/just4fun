@@ -11,6 +11,8 @@ _start:
     ori    $2, $2, 0xffff
     mtc0   $2, $12, 0
     jal    main
+    nop
 
 end:
     b end
+    nop

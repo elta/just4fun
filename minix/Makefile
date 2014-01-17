@@ -1,3 +1,4 @@
+#! /bin/bash
 
 CROSS_COMPILE	?= mips64el-unknown-linux-gnu-
 
@@ -29,7 +30,7 @@ FLAGS = -nostdlib -mabi=64 -march=mips64r2 -mgp64 -mdsp
 
 TESTCASES = main.tst
 
-all: build
+all: main.tst main.bin main.hex
 
 head.o : head.S
 	$(Q)$(CC) $(HEAD_FLAGS) -D"STACK_TOP=0xffffffff80200000" -c $< -o $@
@@ -39,6 +40,16 @@ head.o : head.S
 
 %.o  : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+%.hex: $(TESTCASES)
+	@for case in $(TESTCASES); do \
+		$(OBJDUMP) -S $< > $@; \
+	done
+
+%.bin: $(TESTCASES)
+	@for case in $(TESTCASES); do \
+		$(OBJCOPY) -O binary $< $@; \
+	done
 
 %.tst: %.o $(VECTORS_OBJ)
 	$(CC) $(VECTORS_OBJ) $(FLAGS) $(LDFLAGS) $< -o $@
@@ -52,4 +63,7 @@ check:  $(VECTORS_OBJ) $(MIPSSOC_LIB) $(TESTCASES)
 	done
 
 clean:
-	$(Q)rm -f *.o *.tst *.a
+	$(Q)rm -f *.o *.a *.hex
+
+distclean: clean
+	$(Q)rm -rf *.tst *.bin
