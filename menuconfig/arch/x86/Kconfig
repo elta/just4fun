@@ -1,0 +1,6 @@
+
+config HELLO_WORLD
+	bool "hello world"
+
+config HELLO_WORLD2
+	bool "hello world 2"
