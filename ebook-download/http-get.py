@@ -45,13 +45,6 @@ def download(opener, site=str(), href=str(), fullname=str()):
         return
 
     if href[-1:] == '/':    # Floder
-        try:
-            x = opener.open(site + "/" + href)
-            s=x.read()
-        except:
-            log("Web access error, url is " + site + "/" + href)
-            log("Web access error, fullname is " + fullname)
-            return
         s=s.decode('utf-8','ignore')
 
         hp = MyHTMLParser()
@@ -70,7 +63,7 @@ def download(opener, site=str(), href=str(), fullname=str()):
                 download(opener, site, hp.links[i].strip(), fullname + "/" + hp.values[i].strip())
     else:
         log("Save file: " + fullname)
-        f = open(fullname, "a", 1, "gbk")
+        f = open(fullname, "ab")
         f.write(s)
         f.close()
 
