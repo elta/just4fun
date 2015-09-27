@@ -1,0 +1,29 @@
+# /usr/bin/stap
+
+global callserStack[10];
+global callerIndex = 0;
+
+probe process("/home/elta/test/a.out").function("*") {
+    for (i = 0; i < callerIndex; i++) {
+        printf("    ");
+    }
+
+    print_usyms(ppfunc())
+    callerStack[callerIndex] = qs_time()
+    callerIndex++;
+}
+
+probe process("/home/elta/test/a.out").function("*").return {
+    for(i = 0; i < callerIndex - 1; i++) {
+        printf("    ")
+    }
+    print_usyms(ppfunc())
+
+    for(i = 0; i < callerIndex - 1; i++) {
+        printf("    ")
+    }
+    printf("Function time is %ld\n",
+           qs_time() - callerStack[callerIndex - 1])
+
+    callerIndex--;
+}
