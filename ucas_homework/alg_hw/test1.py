@@ -4,9 +4,6 @@ def exchange(s = list(), start = 0, shift = 1):
     size = len(s)
     space = s[start]
 
-    stepLen = size
-    stepTmp = size
-
     preIndex = start
     curIndex = start
 
@@ -15,32 +12,35 @@ def exchange(s = list(), start = 0, shift = 1):
     for i in range(1, 15)[::-1]:
         curIndex = (preIndex + size - shift) % size
 
-        print "%d %d" %(preIndex, curIndex)
+#        print "%d %d" %(preIndex, curIndex)
         if (curIndex == start):
-            print "%d = %d" %(preIndex, space)
+#            print "%d = %d" %(preIndex, space)
             s[preIndex] = space
             break
         else:
-            print "%d = %d" %(preIndex, s[curIndex])
+#            print "%d = %d" %(preIndex, s[curIndex])
             s[preIndex] = s[curIndex]
-
-        stepTmp = size - curIndex
-        if stepTmp < stepLen:
-            stepLen = stepTmp
 
         preIndex = curIndex
 
-    if stepLen != 1:
-        print "Need loop, step len is %d" %stepLen
-
     print s
 
-    return stepLen
+    return s
+
 
 a = range(0, 10)
-shift = 4
+shift = 2
 
-stepLen = exchange(a, 0, shift)
+loopTime = shift
+tmp = 0
+while loopTime > 1:
+    tmp = len(a) % loopTime
+    if tmp == 0:
+        break
 
-for i in range(1, stepLen):
-    exchange(a, i, shift)
+    loopTime = tmp
+
+print "Loop time is ", loopTime
+
+for i in range(0, loopTime):
+    a = exchange(a, i, shift)
