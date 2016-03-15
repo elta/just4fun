@@ -23,7 +23,7 @@ def exchange(s = list(), start = 0, shift = 1):
 
         preIndex = curIndex
 
-    print s
+#    print s
 
     return s
 
@@ -44,3 +44,5 @@ print "Loop time is ", loopTime
 
 for i in range(0, loopTime):
     a = exchange(a, i, shift)
+
+print a
