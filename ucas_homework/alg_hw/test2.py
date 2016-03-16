@@ -1,6 +1,8 @@
 #! /usr/bin/python
+#-*-coding:UTF-8 -*-
 
 import os;
+import shutil;
 import tarfile;
 
 def list_path(path="/"):
@@ -55,6 +57,15 @@ def enterDir(path="/"):
 
 
 # start
-os.chdir("test")
+tmpDir="test"
+defaultTar = "00.tar.gz"
+
+if (isDir(tmpDir)):
+    shutil.rmtree(tmpDir, True)
+
+os.mkdir(tmpDir)
+shutil.copyfile(defaultTar, tmpDir + "/" + defaultTar)
+
+os.chdir(tmpDir)
 
 print enterDir(os.getcwd())
