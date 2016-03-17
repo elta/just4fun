@@ -1,5 +1,18 @@
 #! /usr/bin/python
 
+# Greatest common divisor;
+def gcd(a, b):
+    if a < b:
+        a, b = b, a
+
+    while b != 0:
+        temp = a % b
+        a = b
+        b = temp
+
+    return a
+
+# Exachange list number by couple
 def exchange(s = list(), start = 0, shift = 1):
     size = len(s)
     space = s[start]
@@ -9,40 +22,43 @@ def exchange(s = list(), start = 0, shift = 1):
 
     maxNum = 10
 
-    for i in range(1, 15)[::-1]:
+    while True:
         curIndex = (preIndex + size - shift) % size
 
-#        print "%d %d" %(preIndex, curIndex)
         if (curIndex == start):
-#            print "%d = %d" %(preIndex, space)
             s[preIndex] = space
             break
         else:
-#            print "%d = %d" %(preIndex, s[curIndex])
             s[preIndex] = s[curIndex]
 
         preIndex = curIndex
 
-#    print s
-
     return s
 
+# Generate loop times
+def genLoop(length = 1, shift =1):
+    loopTime = shift
+    tmp = 0
+    while loopTime > 1:
+        tmp = length % loopTime
+        if tmp == 0:
+            break
 
-a = range(0, 10)
-shift = 2
+        loopTime = tmp
 
-loopTime = shift
-tmp = 0
-while loopTime > 1:
-    tmp = len(a) % loopTime
-    if tmp == 0:
-        break
+    loopTime = loopTime / gcd(loopTime, length)
 
-    loopTime = tmp
+    print "Loop time is ", loopTime
+    return loopTime
 
-print "Loop time is ", loopTime
+# Main function
+if __name__ == "__main__":
+    a = range(0, 100)
+    shift = 7
 
-for i in range(0, loopTime):
-    a = exchange(a, i, shift)
+    loopTime = genLoop(len(a), shift)
 
-print a
+    for i in range(0, loopTime):
+        a = exchange(a, i, shift)
+
+    print a
