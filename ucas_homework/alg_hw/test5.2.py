@@ -16,56 +16,41 @@ if nums[2] > nums[3]:
     nums.remove(tmp)
     nums.insert(2, tmp)
 
-if nums[3] < nums[0]: # Ordered
-    tmp0 = nums[2]
-    tmp1 = nums[3]
+save_num = 0
+if nums[0] < nums[2]:
+    save_num = nums[1]
+else:
+    save_num = nums[3]
+    tmp = nums[2]
+    nums.remove(tmp)
+    nums.insert(0,tmp) 
 
-    nums.remove(tmp0)
-    nums.remove(tmp1)
-
-    nums.insert(0, tmp1)
-    nums.insert(0, tmp0)
-elif nums[0] < nums[2]:
-    tmp0 = nums[2]
-    if nums[1] < nums[3]:
-        nums.remove(tmp0)
-        nums.insert(1, tmp0)
-    else:
-        tmp1 = nums[3]
-        nums.remove(tmp0)
-        nums.remove(tmp1)
-        nums.insert(1, tmp1)
-        nums.insert(1, tmp0)
-elif nums[2] < nums[0]:
-    tmp0 = nums[2]
-    if nums[1] < nums[3]:
-        nums.remove(tmp0)
-        nums.insert(0, tmp0)
-    else:
-        tmp1 = nums[3]
-        nums.remove(tmp0)
-        nums.remove(tmp1)
-        nums.insert(0, tmp0)
-        nums.insert(2, tmp1)
+nums.remove(save_num)
 
 
-
-tmp = nums[4]
+tmp = nums[3]
 nums.remove(tmp)
-
 if tmp < nums[1]:
     if tmp < nums[0]:
         nums.insert(0, tmp)
     else:
         nums.insert(1, tmp)
 else:
-    if tmp < nums[3]:
-        if tmp < nums[2]:
-            nums.insert(2, tmp)
-        else:
-            nums.insert(3, tmp)
+    if tmp < nums[2]:
+        nums.insert(2, tmp)
     else:
-        nums.insert(4, tmp)
+        nums.insert(3, tmp)
+
+if save_num < nums[2]:
+    if save_num < nums[1]:
+        nums.insert(1, save_num)
+    else:
+        nums.insert(2, save_num)
+else:
+    if save_num < nums[3]:
+        nums.insert(3, save_num)
+    else:
+        nums.insert(4, save_num)
 
 print "Final ", nums
 
